@@ -170,6 +170,20 @@
 
   .cand-card:hover { background: var(--card-hover); }
 
+  .cand-card.withdrawn {
+    opacity: 0.45;
+    filter: grayscale(0.6);
+  }
+
+  .withdrawn-badge {
+    font-size: 10px; text-transform: uppercase;
+    letter-spacing: 0.07em; color: var(--muted);
+    font-weight: 500; margin-top: 4px;
+    border: 0.5px solid var(--border);
+    border-radius: 4px; padding: 2px 6px;
+    display: inline-block;
+  }
+
   .cand-photo {
     background: var(--navy-mid);
     border-right: 0.5px solid var(--border);
@@ -300,12 +314,21 @@ const DATA = {
     name: "Maine",
     candidates: [
       {
+        name: "Owen McCarthy",
+        position: "Governor",
+        race: "2026 Gubernatorial Race",
+        party: "Republican",
+        reason: "Owen McCarthy wants to do a full review of every state program, justify it or cut it, simple as that. He wants to eliminate bloated positions, slash regulations killing small businesses, and has a realistic path to zero income tax by actually controlling spending instead of just talking about it. He's not taking PAC money, nobody owns him, and his whole approach works around a Democrat-controlled Legislature instead of pretending it doesn't exist, something that Jim Libby also understood. Given where Maine is right now and what the GOP field looks like, Owen McCarthy is the right call.",
+        photo: "https://owenformaine.com/wp-content/uploads/2025/03/Owen-McCarthy-1024x932.png"
+      },
+      {
         name: "Jim Libby",
         position: "Governor",
         race: "2026 Gubernatorial Race",
         party: "Republican",
-        reason: "Jim Libby is the most qualified candidate in this race with the right demeanor for where Maine is right now. While a lot of the GOP Candidates are running on radical ideas, we need someone who can actually work the aisle in Augusta and get things done first. As a sitting state senator and tenured business professor at Thomas College, Jim has the experience, well-reasoned economic plans, and strong constitutional values including a solid Second Amendment record to do just that.",
-        photo: "https://static.wixstatic.com/media/fe889a_1b1d19893c1544aaaf6341e8522f0745~mv2.jpg"
+        reason: "Jim Libby was the most qualified candidate in this race with the right demeanor for where Maine was at the time. While a lot of the GOP candidates were running on radical ideas, we needed someone who could actually work the aisle in Augusta and get things done first. As a sitting state senator and tenured business professor at Thomas College, Jim had the experience, well-reasoned economic plans, and strong constitutional values including a solid Second Amendment record to do just that.",
+        photo: "https://static.wixstatic.com/media/fe889a_1b1d19893c1544aaaf6341e8522f0745~mv2.jpg",
+        withdrawn: true
       }
     ]
   }
@@ -345,7 +368,7 @@ function renderPanel(fips, pathEl) {
 
   const entry = DATA[fips];
   const name = NAMES[fips] || fips;
-  const count = entry ? entry.candidates.length : 0;
+  const count = entry ? entry.candidates.filter(c => !c.withdrawn).length : 0;
 
   const stateEl = document.getElementById('panel-state');
   stateEl.innerHTML = name + (count ? `<span>${count} endorsement${count > 1 ? 's' : ''}</span>` : '');
@@ -358,8 +381,9 @@ function renderPanel(fips, pathEl) {
       const photoHTML = c.photo
         ? `<img src="${c.photo}" alt="${c.name}" />`
         : getInitials(c.name);
+      const withdrawnBadge = c.withdrawn ? `<div class="withdrawn-badge">Withdrew from race</div>` : '';
       return `
-        <div class="cand-card">
+        <div class="cand-card${c.withdrawn ? ' withdrawn' : ''}">
           <div class="cand-photo">
             <div class="avatar">${photoHTML}</div>
           </div>
@@ -367,9 +391,10 @@ function renderPanel(fips, pathEl) {
             <div class="pos-label">${c.race}</div>
             <div class="pos-name">${c.name}</div>
             <div class="pos-detail">${c.position} &middot; ${c.party}</div>
+            ${withdrawnBadge}
           </div>
           <div class="cand-reason">
-            <div class="reason-label">Why I endorse</div>
+            <div class="reason-label">${c.withdrawn ? 'Why I endorsed' : 'Why I endorse'}</div>
             <div class="reason-text">${c.reason}</div>
           </div>
         </div>`;
@@ -402,7 +427,7 @@ async function draw() {
     .on('mousemove', function(event, d) {
       const fips = String(d.id).padStart(2, '0');
       const name = NAMES[fips] || '';
-      const count = DATA[fips] ? DATA[fips].candidates.length : 0;
+      const count = DATA[fips] ? DATA[fips].candidates.filter(c => !c.withdrawn).length : 0;
       tip.innerHTML = name + (count
         ? `<span class="tip-count">${count} endorsement${count > 1 ? 's' : ''}</span>`
         : '');

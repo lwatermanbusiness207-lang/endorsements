@@ -280,7 +280,7 @@
     <div class="section-label">Click a state to view endorsements</div>
     <div id="legend">
       <div class="li"><div class="ld" style="background:#3d7ebf;"></div>Has endorsements</div>
-      <div class="li"><div class="ld" style="background:#8fa8c4;"></div>No endorsements yet</div>
+      <div class="li"><div class="ld" style="background:#6b7d90;"></div>No endorsements yet</div>
     </div>
     <div id="map-wrapper">
       <svg id="map" viewBox="0 0 960 600"></svg>
@@ -447,7 +447,7 @@ async function draw() {
     .attr('d', pathGen)
     .attr('fill', d => {
       const fips = String(d.id).padStart(2, '0');
-      return DATA[fips] ? '#3d7ebf' : '#8fa8c4';
+      return DATA[fips] ? '#3d7ebf' : '#6b7d90';
     })
     .attr('stroke', 'none')
     .on('mousemove', function(event, d) {

@@ -16,17 +16,17 @@
     --blue-bright: #5a99d4;
     --gold: #c9a84c;
     --gold-light: #e2c97e;
-    --slate: #6b7f96;
-    --muted: #a0b0c0;
-    --border: rgba(255,255,255,0.08);
-    --card-bg: rgba(255,255,255,0.04);
-    --card-hover: rgba(255,255,255,0.07);
+    --slate: #4a5a6a;
+    --muted: #64748b;
+    --border: rgba(0,0,0,0.1);
+    --card-bg: rgba(0,0,0,0.025);
+    --card-hover: rgba(0,0,0,0.05);
     --white: #f0f4f8;
-    --text: #dce6f0;
+    --text: #1a2535;
   }
 
   body {
-    background: var(--navy);
+    background: #ffffff;
     color: var(--text);
     font-family: 'DM Sans', sans-serif;
     font-weight: 400;
@@ -43,7 +43,7 @@
   header h1 {
     font-family: 'Playfair Display', serif;
     font-size: 2rem; font-weight: 700;
-    color: var(--white);
+    color: var(--navy);
     letter-spacing: -0.01em;
   }
 
@@ -80,7 +80,7 @@
   }
 
   #map-wrapper {
-    background: var(--navy-mid);
+    background: #f5f7fa;
     border: 0.5px solid var(--border);
     border-radius: 12px;
     padding: 1.5rem;
@@ -100,14 +100,14 @@
   /* TOOLTIP */
   #tip {
     position: fixed; display: none; z-index: 9999;
-    background: var(--navy-light);
-    border: 0.5px solid rgba(201,168,76,0.3);
+    background: #ffffff;
+    border: 0.5px solid rgba(201,168,76,0.5);
     border-radius: 8px;
     padding: 8px 13px;
     pointer-events: none;
     font-size: 13px; font-weight: 500;
-    color: var(--white);
-    box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+    color: var(--navy);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.12);
   }
 
   #tip .tip-count {
@@ -136,7 +136,7 @@
   #panel-state {
     font-family: 'Playfair Display', serif;
     font-size: 1.4rem; font-weight: 600;
-    color: var(--white);
+    color: var(--navy);
   }
 
   #panel-state span {
@@ -154,7 +154,7 @@
     transition: background 0.15s, color 0.15s;
   }
 
-  #close-btn:hover { background: var(--card-hover); color: var(--white); }
+  #close-btn:hover { background: var(--card-hover); color: var(--navy); }
 
   /* CANDIDATE CARDS */
   .cand-card {
@@ -185,7 +185,7 @@
   }
 
   .cand-photo {
-    background: var(--navy-mid);
+    background: #f0f4f8;
     border-right: 0.5px solid var(--border);
     display: flex; flex-direction: column;
     align-items: center; justify-content: center;
@@ -194,8 +194,8 @@
 
   .avatar {
     width: 54px; height: 54px; border-radius: 50%;
-    background: var(--navy-light);
-    border: 1.5px solid rgba(201,168,76,0.3);
+    background: #dce6f0;
+    border: 1.5px solid rgba(201,168,76,0.4);
     display: flex; align-items: center; justify-content: center;
     font-size: 17px; font-weight: 500;
     color: var(--gold);
@@ -218,7 +218,7 @@
 
   .pos-name {
     font-size: 16px; font-weight: 500;
-    color: var(--white); line-height: 1.3;
+    color: var(--navy); line-height: 1.3;
     font-family: 'Playfair Display', serif;
   }
 
@@ -280,7 +280,7 @@
     <div class="section-label">Click a state to view endorsements</div>
     <div id="legend">
       <div class="li"><div class="ld" style="background:#3d7ebf;"></div>Has endorsements</div>
-      <div class="li"><div class="ld" style="background:#2a3d52;"></div>No endorsements yet</div>
+      <div class="li"><div class="ld" style="background:#c8d6e5;"></div>No endorsements yet</div>
     </div>
     <div id="map-wrapper">
       <svg id="map" viewBox="0 0 960 600"></svg>
@@ -447,7 +447,7 @@ async function draw() {
     .attr('d', pathGen)
     .attr('fill', d => {
       const fips = String(d.id).padStart(2, '0');
-      return DATA[fips] ? '#3d7ebf' : '#2a3d52';
+      return DATA[fips] ? '#3d7ebf' : '#c8d6e5';
     })
     .attr('stroke', 'none')
     .on('mousemove', function(event, d) {
@@ -470,7 +470,7 @@ async function draw() {
   svg.append('path')
     .datum(mesh)
     .attr('fill', 'none')
-    .attr('stroke', 'rgba(255,255,255,0.15)')
+    .attr('stroke', 'rgba(255,255,255,0.6)')
     .attr('stroke-width', '0.7')
     .attr('d', pathGen);
 }

@@ -9,7 +9,7 @@
   * { box-sizing: border-box; margin: 0; padding: 0; }
 
   body {
-    background: #0f1c2e;
+    background: #ffffff;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -37,24 +37,25 @@
     font-family: 'Playfair Display', serif;
     font-size: 1.6rem;
     font-weight: 700;
-    color: #f0f4f8;
+    color: #0f1c2e;
     margin-bottom: 1.5rem;
     letter-spacing: -0.01em;
   }
 
   .debt-display {
-    background: rgba(255,255,255,0.04);
-    border: 0.5px solid rgba(201,168,76,0.3);
+    background: #ffffff;
+    border: 1.5px solid rgba(201,168,76,0.5);
     border-radius: 12px;
     padding: 1.5rem 2rem;
     display: inline-block;
     width: 100%;
+    box-shadow: 0 2px 16px rgba(201,168,76,0.08);
   }
 
   .debt-number {
     font-family: 'Share Tech Mono', monospace;
     font-size: clamp(1.6rem, 4vw, 2.8rem);
-    color: #e2c97e;
+    color: #c9a84c;
     letter-spacing: 0.04em;
     line-height: 1;
     margin-bottom: 0.5rem;
@@ -96,7 +97,7 @@
 
   .source-note {
     font-size: 10px;
-    color: #3d5066;
+    color: #94a3b8;
     margin-top: 1rem;
     letter-spacing: 0.03em;
   }
@@ -132,11 +133,11 @@
 </div>
 
 <script>
-  // Baseline: U.S. debt as of April 16, 2026 (approx. based on Treasury trajectory)
-  const BASE_DEBT = 36_800_000_000_000;
-  const BASE_DATE = new Date('2026-04-16T00:00:00Z');
+  // Baseline: U.S. debt as of April 17, 2026 (source: U.S. Treasury / davemanuel.com)
+  const BASE_DEBT = 39_023_724_083_449;
+  const BASE_DATE = new Date('2026-04-17T00:00:00Z');
 
-  // ~$1.9 trillion per year increase
+  // ~$1.9 trillion per year increase (CBO FY2026 deficit projection)
   const RATE_PER_SECOND = 1_900_000_000_000 / (365.25 * 24 * 3600);
 
   function formatDebt(n) {

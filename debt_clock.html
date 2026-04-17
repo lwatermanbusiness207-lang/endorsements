@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>U.S. National Debt Clock</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=DM+Sans:wght@300;400;500&family=Share+Tech+Mono&display=swap" rel="stylesheet"/>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: #0f1c2e;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    font-family: 'DM Sans', sans-serif;
+    padding: 2rem 1rem;
+  }
+
+  .clock-wrapper {
+    text-align: center;
+    width: 100%;
+    max-width: 800px;
+  }
+
+  .clock-label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: #c9a84c;
+    font-weight: 500;
+    margin-bottom: 0.75rem;
+  }
+
+  .clock-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: #f0f4f8;
+    margin-bottom: 1.5rem;
+    letter-spacing: -0.01em;
+  }
+
+  .debt-display {
+    background: rgba(255,255,255,0.04);
+    border: 0.5px solid rgba(201,168,76,0.3);
+    border-radius: 12px;
+    padding: 1.5rem 2rem;
+    display: inline-block;
+    width: 100%;
+  }
+
+  .debt-number {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: clamp(1.6rem, 4vw, 2.8rem);
+    color: #e2c97e;
+    letter-spacing: 0.04em;
+    line-height: 1;
+    margin-bottom: 0.5rem;
+  }
+
+  .debt-sublabel {
+    font-size: 11px;
+    color: #6b7f96;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  .stats-row {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin-top: 1.25rem;
+    flex-wrap: wrap;
+  }
+
+  .stat-item {
+    text-align: center;
+  }
+
+  .stat-value {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 1rem;
+    color: #5a99d4;
+    display: block;
+  }
+
+  .stat-label {
+    font-size: 10px;
+    color: #6b7f96;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    margin-top: 2px;
+  }
+
+  .source-note {
+    font-size: 10px;
+    color: #3d5066;
+    margin-top: 1rem;
+    letter-spacing: 0.03em;
+  }
+</style>
+</head>
+<body>
+<div class="clock-wrapper">
+  <div class="clock-label">Real-Time Estimate</div>
+  <div class="clock-title">U.S. National Debt</div>
+  <div class="debt-display">
+    <div class="debt-number" id="debt">$0</div>
+    <div class="debt-sublabel">Total Federal Debt Outstanding</div>
+    <div class="stats-row">
+      <div class="stat-item">
+        <span class="stat-value" id="per-second">$0</span>
+        <span class="stat-label">Per Second</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-value" id="per-minute">$0</span>
+        <span class="stat-label">Per Minute</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-value" id="per-hour">$0</span>
+        <span class="stat-label">Per Hour</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-value" id="per-day">$0</span>
+        <span class="stat-label">Per Day</span>
+      </div>
+    </div>
+  </div>
+  <div class="source-note">Based on U.S. Treasury data & CBO projections. Estimated increase: ~$1.9T/year.</div>
+</div>
+
+<script>
+  // Baseline: U.S. debt as of April 16, 2026 (approx. based on Treasury trajectory)
+  const BASE_DEBT = 36_800_000_000_000;
+  const BASE_DATE = new Date('2026-04-16T00:00:00Z');
+
+  // ~$1.9 trillion per year increase
+  const RATE_PER_SECOND = 1_900_000_000_000 / (365.25 * 24 * 3600);
+
+  function formatDebt(n) {
+    return '$' + Math.floor(n).toLocaleString('en-US');
+  }
+
+  function formatRate(n) {
+    if (n >= 1_000_000) return '$' + (n / 1_000_000).toFixed(2) + 'M';
+    if (n >= 1_000) return '$' + (n / 1_000).toFixed(1) + 'K';
+    return '$' + Math.floor(n).toLocaleString();
+  }
+
+  // Set static rate displays
+  document.getElementById('per-second').textContent = formatRate(RATE_PER_SECOND);
+  document.getElementById('per-minute').textContent = formatRate(RATE_PER_SECOND * 60);
+  document.getElementById('per-hour').textContent   = formatRate(RATE_PER_SECOND * 3600);
+  document.getElementById('per-day').textContent    = formatRate(RATE_PER_SECOND * 86400);
+
+  function tick() {
+    const elapsed = (Date.now() - BASE_DATE.getTime()) / 1000;
+    const current = BASE_DEBT + (elapsed * RATE_PER_SECOND);
+    document.getElementById('debt').textContent = formatDebt(current);
+  }
+
+  tick();
+  setInterval(tick, 100);
+</script>
+</body>
+</html>

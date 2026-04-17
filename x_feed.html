@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Luke A. Waterman — X Feed</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: #0f1c2e;
+    font-family: 'DM Sans', sans-serif;
+    padding: 1.5rem 1rem;
+    min-height: 100vh;
+  }
+
+  .feed-header {
+    text-align: center;
+    margin-bottom: 1.25rem;
+  }
+
+  .feed-label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: #c9a84c;
+    font-weight: 500;
+    margin-bottom: 0.4rem;
+  }
+
+  .feed-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #f0f4f8;
+  }
+
+  .feed-title span { color: #c9a84c; }
+
+  .timeline-wrapper {
+    max-width: 550px;
+    margin: 0 auto;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 0.5px solid rgba(255,255,255,0.08);
+  }
+</style>
+</head>
+<body>
+  <div class="feed-header">
+    <div class="feed-label">Latest Updates</div>
+    <div class="feed-title">Luke <span>A.</span> Waterman on X</div>
+  </div>
+  <div class="timeline-wrapper">
+    <a class="twitter-timeline"
+       data-theme="dark"
+       data-chrome="noheader nofooter noborders transparent"
+       data-tweet-limit="6"
+       href="https://twitter.com/LukeAWaterman">
+      Tweets by @LukeAWaterman
+    </a>
+  </div>
+  <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+</body>
+</html>
